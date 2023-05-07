@@ -3,15 +3,15 @@ locals {
   asp_name         = "zentral-${var.environment}"
 }
 
-resource "azurerm_resource_group" "example" {
-  name     = "${local.application_name}-asp-${var.environment}-rg"
+resource "azurerm_resource_group" "primary_asp_rg" {
+  name     = "${local.application_name}-${var.environment}-rg"
   location = var.location
 }
 
-resource "azurerm_app_service_plan" "example" {
+resource "azurerm_app_service_plan" "asp" {
   name                = "${local.asp_name}-asp"
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
+  location            = azurerm_resource_group.primary_asp_rg.location
+  resource_group_name = azurerm_resource_group.primary_asp_rg.name
 
   sku {
     tier = "Standard"
