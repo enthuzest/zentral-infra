@@ -1,16 +1,16 @@
 locals {
   application_name = "zentral"
-  server_name      = "zentral-${var.sub_environment}"
+  server_name      = "zentral-${var.environment}"
 }
 
 resource "azurerm_resource_group" "sql-server-rg" {
-  name     = "${local.application_name}-sql-${var.sub_environment}-rg"
+  name     = "${local.application_name}-sql-${var.environment}-rg"
   location = var.location
   tags     = var.tags
 }
 
 resource "azurerm_mssql_server" "sql_server" {
-  name                = local.server_name
+  name                = "${local.server_name}-server"
   resource_group_name = azurerm_resource_group.sql-server-rg.name
   location            = azurerm_resource_group.sql-server-rg.location
   version             = "12.0"
