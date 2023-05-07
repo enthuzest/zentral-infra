@@ -1,5 +1,5 @@
 locals {
-    workspace       = "sqlserver"
+    workspace       = "serviceplan"
     sub_environment = "dev"
     environment     = "nprd"
     location        = "australiasoutheast"
