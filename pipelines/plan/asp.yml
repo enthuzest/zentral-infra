@@ -1,0 +1,30 @@
+trigger: none
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+- name: workingDirectory
+  value: common/app-service-plan
+- name: vault
+  value: automata-kv
+
+stages:
+  - stage: DevPlan
+    jobs: 
+    - job: Plan
+      steps:
+      - task: AzureCLI@2
+        displayName: Plan
+        inputs:
+          azureSubscription: 'HandsOn'
+          scriptType: 'batch'
+          scriptLocation: 'inlineScript'
+          inlineScript: |
+            export ARM_CLIENT_ID = $(az keyvault secret show --name arm-client-id --vault ${{ variables.vault }} --query 'value' --out tsv)
+            export ARM_CLIENT_SECRET = $(az keyvault secret show --name arm-client-id --vault ${{ variables.vault }} --query 'value' --out tsv)
+            export ARM_SUBSCRIPTION_ID = $(az keyvault secret show --name arm-subscription-id --vault ${{ variables.vault }} --query 'value' --out tsv)
+            export ARM_TENANT_ID = $(az keyvault secret show --name arm-tenant-id --vault ${{ variables.vault }} --query 'value' --out tsv)
+            terragrunt plan --terragrunt-config ./terragrunt.nprd.hcl -lock-timeout=20m
+          workingDirectory: '${{ variables.workingDirectory }}'
+            
