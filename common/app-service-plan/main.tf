@@ -8,13 +8,10 @@ resource "azurerm_resource_group" "primary_asp_rg" {
   location = var.location
 }
 
-resource "azurerm_app_service_plan" "asp" {
+resource "azurerm_service_plan" "asp" {
   name                = "${local.asp_name}-asp"
   location            = azurerm_resource_group.primary_asp_rg.location
   resource_group_name = azurerm_resource_group.primary_asp_rg.name
-
-  sku {
-    tier = "Standard"
-    size = "S1"
-  }
+  os_type             = "Windows"
+  sku_name            = "S1"
 }
