@@ -1,9 +1,9 @@
 terraform {
-  required_version = "=1.4.4"
+  required_version = "1.5.7"
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~>3.53.0"
+      version = "~>3.73.0"
     }
   }
   backend "azurerm" {}
@@ -16,5 +16,5 @@ provider "azurerm" {
 }
 
 module "base" {
-  source = "github.com/faraz841/Zentral//modules/base"
+  source = "github.com/enthuzest/zentral//modules/base"
 }
