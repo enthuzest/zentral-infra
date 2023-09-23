@@ -18,7 +18,7 @@ stages:
         displayName: Plan
         inputs:
           azureSubscription: 'HandsOn'
-          scriptType: 'batch'
+          scriptType: 'pscore'
           scriptLocation: 'inlineScript'
           inlineScript: 'export ARM_CLIENT_ID = $(az keyvault secret show --name arm-client-id --vault ${{ variables.vault }} --query ''value'' --out tsv)'
           workingDirectory: '${{ variables.workingDirectory }}'
