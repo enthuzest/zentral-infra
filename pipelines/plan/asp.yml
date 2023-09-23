@@ -20,6 +20,7 @@ stages:
           azureSubscription: 'HandsOn'
           scriptType: 'bash'
           scriptLocation: 'inlineScript'
-          inlineScript: 'export ARM_CLIENT_ID = $(az keyvault secret show --name arm-client-id --vault ${{ variables.vault }} --query ''value'' --out tsv)'
+          inlineScript: |
+            export ARM_CLIENT_ID = $(az keyvault secret show --name arm-client-id --vault ${{ variables.vault }} --query 'value' --out tsv)
           workingDirectory: '${{ variables.workingDirectory }}'
             
