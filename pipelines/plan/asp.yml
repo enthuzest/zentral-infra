@@ -1,5 +1,14 @@
 trigger: none
 
+pr:
+  autoCancel: false
+  branches:
+     include:
+     - master
+  paths:
+    include:
+    - common/app-service-plan
+
 pool:
   vmImage: ubuntu-latest
 
