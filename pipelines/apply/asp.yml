@@ -10,9 +10,9 @@ variables:
   value: automata-kv
 
 stages:
-  - stage: DevPlan
+  - stage: DevApply
     jobs: 
-    - job: Plan
+    - job: Apply
       steps:
       - task: Bash@3
         displayName: 'Install Terragrunt'
@@ -24,7 +24,7 @@ stages:
             chmod u+x terragrunt
             sudo mv terragrunt /usr/local/bin/terragrunt
       - task: AzureCLI@2
-        displayName: Plan
+        displayName: Apply
         inputs:
           azureSubscription: 'HandsOn'
           scriptType: 'bash'
@@ -34,5 +34,5 @@ stages:
             export ARM_CLIENT_SECRET=$(az keyvault secret show --name arm-client-secret --vault ${{ variables.vault }} --query 'value' --out tsv)
             export ARM_SUBSCRIPTION_ID=$(az keyvault secret show --name arm-subscription-id --vault ${{ variables.vault }} --query 'value' --out tsv)
             export ARM_TENANT_ID=$(az keyvault secret show --name arm-tenant-id --vault ${{ variables.vault }} --query 'value' --out tsv)
-            terragrunt plan --terragrunt-config ./terragrunt.nprd.hcl -lock-timeout=20m
+            terragrunt apply --terragrunt-config ./terragrunt.nprd.hcl -lock-timeout=20m -auto-approve
           workingDirectory: '${{ variables.workingDirectory }}'
