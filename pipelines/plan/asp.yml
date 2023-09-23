@@ -31,7 +31,7 @@ stages:
           scriptLocation: 'inlineScript'
           inlineScript: |
             export ARM_CLIENT_ID=$(az keyvault secret show --name arm-client-id --vault ${{ variables.vault }} --query 'value' --out tsv)
-            export ARM_CLIENT_SECRET=$(az keyvault secret show --name arm-client-id --vault ${{ variables.vault }} --query 'value' --out tsv)
+            export ARM_CLIENT_SECRET=$(az keyvault secret show --name arm-client-secret --vault ${{ variables.vault }} --query 'value' --out tsv)
             export ARM_SUBSCRIPTION_ID=$(az keyvault secret show --name arm-subscription-id --vault ${{ variables.vault }} --query 'value' --out tsv)
             export ARM_TENANT_ID=$(az keyvault secret show --name arm-tenant-id --vault ${{ variables.vault }} --query 'value' --out tsv)
             terragrunt init --terragrunt-config ./terragrunt.nprd.hcl -lock-timeout=20m
