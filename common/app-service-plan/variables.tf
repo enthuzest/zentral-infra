@@ -13,6 +13,6 @@ variable "subscription_id" {
 }
 
 variable "tenant_id" {
-  default     = "78ca5159-6d10-4edb-b73b-9ed9b98fd637"
+  default     = "523ab593-8bae-485a-bde2-5fab077a0f92"
   description = "tenant id"
 }

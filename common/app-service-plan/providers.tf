@@ -9,7 +9,7 @@ terraform {
   backend "azurerm" {}
 }
 provider "azurerm" {
-  subscription_id = "fe790859-8eda-4568-b4d4-07fca54605e4"
+  subscription_id = var.subscription_id
   features {}
   alias = "user"
 }
