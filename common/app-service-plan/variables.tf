@@ -8,11 +8,11 @@ variable "tags" {
 }
 
 variable "subscription_id" {
-  default     = "992dc453-8c7a-44c9-bfe3-991c6f6c6f2c"
+  default     = "fe790859-8eda-4568-b4d4-07fca54605e4"
   description = "subscription id"
 }
 
 variable "tenant_id" {
-  default     = "78ca5159-6d10-4edb-b73b-9ed9b98fd637"
+  default     = "523ab593-8bae-485a-bde2-5fab077a0f92"
   description = "tenant id"
 }

@@ -1,0 +1,47 @@
+trigger: none
+
+pr:
+  autoCancel: false
+  branches:
+     include:
+     - master
+  paths:
+    include:
+    - common/app-service-plan
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+- name: workingDirectory
+  value: common/app-service-plan
+- name: vault
+  value: automata-kv
+
+stages:
+  - stage: DevPlan
+    jobs: 
+    - job: Plan
+      steps:
+      - task: Bash@3
+        displayName: 'Install Terragrunt'
+        inputs:
+          targetType: 'inline'
+          script: |
+            wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.51.4/terragrunt_linux_amd64
+            mv terragrunt_linux_amd64 terragrunt
+            chmod u+x terragrunt
+            sudo mv terragrunt /usr/local/bin/terragrunt
+      - task: AzureCLI@2
+        displayName: Plan
+        inputs:
+          azureSubscription: 'HandsOn'
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
+          inlineScript: |
+            export ARM_CLIENT_ID=$(az keyvault secret show --name arm-client-id --vault ${{ variables.vault }} --query 'value' --out tsv)
+            export ARM_CLIENT_SECRET=$(az keyvault secret show --name arm-client-secret --vault ${{ variables.vault }} --query 'value' --out tsv)
+            export ARM_SUBSCRIPTION_ID=$(az keyvault secret show --name arm-subscription-id --vault ${{ variables.vault }} --query 'value' --out tsv)
+            export ARM_TENANT_ID=$(az keyvault secret show --name arm-tenant-id --vault ${{ variables.vault }} --query 'value' --out tsv)
+            terragrunt plan --terragrunt-config ./terragrunt.nprd.hcl -lock-timeout=20m
+          workingDirectory: '${{ variables.workingDirectory }}'
